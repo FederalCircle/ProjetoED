@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1490595074 source:c:\users\alyson\documents\dev\codeblocks\doublylinkedlist\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1490595074 source:c:\users\alyson\documents\dev\codeblocks\projetoed\doublylinkedlist\main.c
+	<stdio.h>
+	<stdlib.h>
+
