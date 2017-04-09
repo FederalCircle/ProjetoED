@@ -102,22 +102,28 @@ type deQueue(Queue* queue){
  * Funções para o trabalho
  * ------------------------------
  */
+
+/* Inverte todos os elementos da fila passada como parâmetro.
+ * Ex: [1, 2, 3] >> [3, 2, 1].
+ */
 void reverseQueue(Queue* queue){
     Queue* aux1 = newQueue();
     Queue* aux2 = newQueue();
     int i, j;
-    //Passa todos os elementos de queue para aux1
+    //Passa todos os elementos de queue para aux1.
     for(i = size(queue); i > 0; i--){
         enQueue(aux1, deQueue(queue));
     }
     //A variável i, nesse caso, é a metade do tamanho arredondada para cima.
     for(i = (size(aux1)+1)/2; i > 0; i--){
+        //Passa todos os elementos de aux1 para aux2, menos o último, que vai para queue.
         for(j = size(aux1); j>0; j--){
             if(j!=1)
                 enQueue(aux2, deQueue(aux1));
             else
                 enQueue(queue, deQueue(aux1));
         }
+        //Passa todos os elementos de aux2 para aux1, menos o último, que vai para queue.
         for(j = size(aux2); j>0; j--){
             if(j!=1)
                 enQueue(aux1, deQueue(aux2));
@@ -145,6 +151,9 @@ void printQueue(Queue* queue){
 int main(){
     Queue* queue = newQueue();
 
+    enQueue(queue, 1);
+    enQueue(queue, 2);
+    enQueue(queue, 3);
     printQueue(queue);
 
     printf("Invertendo a fila...\n");
