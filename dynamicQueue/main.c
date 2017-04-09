@@ -61,8 +61,11 @@ int size(Queue* queue){
     return size;
 }
 
+/* Retorna nulo para uma fila vazia ou o
+ * primeiro elemento de uma pilha preenchida.
+ */
 type peek(Queue* queue){
-
+    return (isEmpty(queue))?NULL:queue->head->data;
 }
 
 /* Adiciona um novo elemento ao final da lista.
@@ -89,7 +92,7 @@ type deQueue(Queue* queue){
     Node* temp_node;
     type deQueuedValue = 0;
     if(!isEmpty(queue)){
-        // temp_node garda o endereço de memória a ser liberado
+        // temp_node guarda o endereço de memória a ser liberado
         temp_node = queue->head;
         deQueuedValue = queue->head->data;
         queue->head = queue->head->next;
