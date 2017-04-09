@@ -1,15 +1,24 @@
+/**------------------------------
+ * Dynamic Queue
+ * ------------------------------
+ * @autor Alyson Maia <amsq@ecomp.poli.br>
+ * @disciplina Estrutura de Dados
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Definição de constantes */
 #define TRUE 1
 #define FALSE 0
 
+/* Definição de tipos */
 typedef int bool;
 typedef int type;
 
-typedef struct node_t{
+typedef struct node_struct{
     type data;
-    struct node_t* next;
+    struct node_struct* next;
 } Node;
 
 typedef struct{
@@ -17,6 +26,7 @@ typedef struct{
     Node* tail;
 } Queue;
 
+/* Construtores de estruturas */
 Node* newNode(type data){
     Node* newNode = (Node*)calloc(1, sizeof(Node));
     newNode->data = data;
@@ -28,10 +38,35 @@ Queue* newQueue(){
     return newQueue;
 }
 
+/* ------------------------------
+ * Funções para a fila
+ * ------------------------------
+ */
+
+/* Verifica se a fila está ou não vazia.
+ */
 bool isEmpty(Queue* queue){
     return (queue->head == NULL)?TRUE:FALSE;
 }
 
+/* Retorna a quantidade de elementos na fila.
+ */
+int size(Queue* queue){
+    int size = 0;
+    Node* temp_node = queue->head;
+    while(temp_node != NULL){
+        size++;
+        temp_node = temp_node->next;
+    }
+    return size;
+}
+
+type peek(Queue* queue){
+
+}
+
+/* Adiciona um novo elemento ao final da lista.
+ */
 void enQueue(Queue* queue, type data){
     Node* node = newNode(data);
     if(isEmpty(queue)){
@@ -44,15 +79,52 @@ void enQueue(Queue* queue, type data){
     }
 }
 
+/* Se a fila estiver vazia, retorna 0.
+ * Se não estiver, retorna o valor do
+ * primeiro elemento, libera o espaço
+ * de memória e coloca o segundo elemento
+ * para ser o novo primeiro.
+ */
 type deQueue(Queue* queue){
-    type temp_return = NULL;
+    Node* temp_node;
+    type deQueuedValue = 0;
     if(!isEmpty(queue)){
-        Node* temp_node = queue->head;
+        // temp_node garda o endereço de memória a ser liberado
+        temp_node = queue->head;
+        deQueuedValue = queue->head->data;
         queue->head = queue->head->next;
-        temp_return = temp_node->data;
         free(temp_node);
     }
-    return temp_return;
+    return deQueuedValue;
+}
+
+/* ------------------------------
+ * Funções para o trabalho
+ * ------------------------------
+ */
+void reverseQueue(Queue* queue){
+    Queue* aux1 = newQueue();
+    Queue* aux2 = newQueue();
+    int i, j;
+    //Passa todos os elementos de queue para aux1
+    for(i = size(queue); i > 0; i--){
+        enQueue(aux1, deQueue(queue));
+    }
+    //A variável i, nesse caso, é a metade do tamanho arredondada para cima.
+    for(i = (size(aux1)+1)/2; i > 0; i--){
+        for(j = size(aux1); j>0; j--){
+            if(j!=1)
+                enQueue(aux2, deQueue(aux1));
+            else
+                enQueue(queue, deQueue(aux1));
+        }
+        for(j = size(aux2); j>0; j--){
+            if(j!=1)
+                enQueue(aux1, deQueue(aux2));
+            else
+                enQueue(queue, deQueue(aux2));
+        }
+    }
 }
 
 void printQueue(Queue* queue){
@@ -73,9 +145,10 @@ void printQueue(Queue* queue){
 int main(){
     Queue* queue = newQueue();
 
-    enQueue(queue, 1);
-    enQueue(queue, 2);
-    enQueue(queue, 3);
+    printQueue(queue);
+
+    printf("Invertendo a fila...\n");
+    reverseQueue(queue);
     printQueue(queue);
 
     printf("deQueued: %d\n", deQueue(queue));
