@@ -98,6 +98,23 @@ type deQueue(Queue* queue){
     return deQueuedValue;
 }
 
+/* Imprime no console os elementos da fila.
+ */
+void printQueue(Queue* queue){
+    printf("Queue Data:\n");
+    if (isEmpty(queue)){
+        printf("--The queue is empty--\n");
+    }
+    else{
+        Node* temp_node = queue->head;
+        do {
+            printf("%d\n", temp_node->data);
+            temp_node = temp_node->next;
+        }while(temp_node != NULL);
+    }
+    putchar('\n');
+}
+
 /* ------------------------------
  * Funções para o trabalho
  * ------------------------------
@@ -131,21 +148,6 @@ void reverseQueue(Queue* queue){
                 enQueue(queue, deQueue(aux2));
         }
     }
-}
-
-void printQueue(Queue* queue){
-    printf("Queue Data:\n");
-    if (isEmpty(queue)){
-        printf("--The queue is empty--\n");
-    }
-    else{
-        Node* temp_node = queue->head;
-        do {
-            printf("%d\n", temp_node->data);
-            temp_node = temp_node->next;
-        }while(temp_node != NULL);
-    }
-    putchar('\n');
 }
 
 int main(){
