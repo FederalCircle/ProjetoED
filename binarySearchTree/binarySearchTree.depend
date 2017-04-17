@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1492325617 source:c:\users\alyson\documents\dev\codeblocks\projetoed\binarysearchtree\main.c
+	<stdio.h>
+	<stdlib.h>
+
