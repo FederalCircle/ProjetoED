@@ -103,24 +103,30 @@ void delete(Root* root, type data){
         /**/
     }
 }
-
+/* função para imprimir a árvore no console horizontalmente */
+void print_tree(Root* root, int height){
+    int i;
+    if(*root == NULL) return;
+    print_tree(&(*root)->right, height+1);
+    for(i=height; i>0; i--) putchar('\t');
+    printf("%d\n", (*root)->data);
+    print_tree(&(*root)->left, height+1);
+}
 int main(){
-    /**/
     Root* root = newRoot();
 
-    insert(root, 100);
-    insert(root, 50);
-    insert(root, 30);
-    insert(root, 70);
+    insert(root, 10);
+    insert(root, 15);
+    insert(root, 5);
     insert(root, 20);
-    insert(root, 40);
-    insert(root, 60);
-    insert(root, 80);
+    insert(root, 13);
+    insert(root, 7);
+    insert(root, 2);
+    insert(root, 21);
+    insert(root, 18);
+    insert(root, 8);
+    insert(root, 6);
 
-    printf("%d\n", (*root)->left->data);
-    delete(root, 50);
-    printf("%d\n", (*root)->left->data);
-
-    /**/
+    print_tree(root, 0);
     return 0;
 }
